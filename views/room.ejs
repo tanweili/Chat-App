@@ -9,7 +9,7 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <h1 class="room-message"></h1>
+    <h1 class="room-message">Welcome <%= username %> to <%= roomname %></h1>
     <div class="window">
         <div class="chat-message">
             <div id="output"></div>
@@ -25,5 +25,7 @@
         <div class="users">
         </div>
     </div>
+
+    <script src="room.js"></script>
 </body>
 </html>
