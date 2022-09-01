@@ -35,12 +35,12 @@ io.on('connection', (socket) => {
         console.log(`${username} with id ${socket.id} joined ${roomname}`)
         socket.join(roomname)
         const roomUsers = getRoomUsers(roomname)
-        io.in(roomname).emit('userConnected', {roomUsers})
+        io.in(roomname).emit('updateUsersOnline', {roomUsers})
     })
 
     socket.on('sendMessage', (message) => {
         const user = getUser(socket.id)
-        socket.broadcast.to(user.roomname).emit('receiveMessage', {message})
+        io.in(roomname).emit('receiveMessage', {message, user})
     })
 
     socket.on('disconnect', () => {
@@ -48,8 +48,7 @@ io.on('connection', (socket) => {
         const user = getUser(socket.id)
         deleteUser(socket.id)
         const roomUsers = getRoomUsers(roomname)
-        io.in(user.roomname).emit('userDisconnected', {roomUsers})
-        
+        io.in(user.roomname).emit('updateUsersOnline', {roomUsers})
     })
 });
 
