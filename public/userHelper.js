@@ -10,8 +10,13 @@ getUser = (id) => {
     return users.find(user => user.id === id)
 }
 
+getRoomUsers = (roomname) => {
+    return users.filter(user => user.roomname === roomname)
+}
+
 module.exports = {
     users,
     addUser,
-    getUser
+    getUser,
+    getRoomUsers
 }

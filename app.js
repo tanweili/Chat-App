@@ -1,5 +1,5 @@
 const path = require('path')
-const {users, addUser, getUser} = require('./public/userlist.js')
+const {users, addUser, getUser, getRoomUsers} = require('./public/userHelper.js')
 
 const express = require('express')
 const app = express();
@@ -24,22 +24,25 @@ app.get('/room', (req, res) => {
 })
 
 app.post('/room', (req, res) => {
-    username = req.body.username,
+    username = req.body.username
     roomname = req.body.roomname
     res.redirect(`/room?username=${username}&roomname=${roomname}`)
 })
 
 io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, roomname}) => {
-        console.log(`${username} with id ${socket.id} joined ${roomname}`)
         addUser(socket.id, username, roomname)
+        console.log(`${username} with id ${socket.id} joined ${roomname}`)
         socket.join(roomname)
-        console.log(`${socket.rooms.forEach((e) => console.log(e))}`)
+        const roomUsers = getRoomUsers(roomname)
+        roomUsers.forEach(element => {
+            console.log(element.username)
+        });
+        io.in(roomname).emit('userConnected', {roomUsers})
     })
 
     socket.on('sendMessage', (message) => {
         const user = getUser(socket.id)
-        console.log(`room IS ${user.roomname}`)
         socket.broadcast.to(user.roomname).emit('receiveMessage', message)
     })
 

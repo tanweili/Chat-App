@@ -10,22 +10,22 @@
 </head>
 
 <body>
-    <h1 class="room-message">Welcome <%= username %> to <%= roomname %>
+    <h1 id="room-message">Welcome <%= username %> to <%= roomname %>
     </h1>
-    <div class="window">
+    <div id="window">
         <div id="chatLog">
             <div>Initially</div>
             <div>Empty!</div>
         </div>
-        <div class='userInput'>
+        <div id='userInput'>
             <input type="text" id="message" placeholder="Enter message">
             <button id="send">Send</button>
         </div>
     </div>
-    <div class="online">
-        <p class="users-online">Users Online</p>
-        <div class="users">
-        </div>
+    <div id="online">
+        <p id="users-online">Users Online</p>
+        <ul id="userList">
+        </ul>
     </div>
 
     <script src="room.js"></script>
