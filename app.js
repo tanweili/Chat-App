@@ -1,5 +1,5 @@
 const path = require('path')
-const {users, addUser, getUser, getRoomUsers} = require('./public/userHelper.js')
+const {users, addUser, getUser, deleteUser, getRoomUsers} = require('./public/userHelper.js')
 
 const express = require('express')
 const app = express();
@@ -35,19 +35,21 @@ io.on('connection', (socket) => {
         console.log(`${username} with id ${socket.id} joined ${roomname}`)
         socket.join(roomname)
         const roomUsers = getRoomUsers(roomname)
-        roomUsers.forEach(element => {
-            console.log(element.username)
-        });
         io.in(roomname).emit('userConnected', {roomUsers})
     })
 
     socket.on('sendMessage', (message) => {
         const user = getUser(socket.id)
-        socket.broadcast.to(user.roomname).emit('receiveMessage', message)
+        socket.broadcast.to(user.roomname).emit('receiveMessage', {message})
     })
 
     socket.on('disconnect', () => {
         console.log(`User with id ${socket.id} disconnected`)
+        const user = getUser(socket.id)
+        deleteUser(socket.id)
+        const roomUsers = getRoomUsers(roomname)
+        io.in(user.roomname).emit('userDisconnected', {roomUsers})
+        
     })
 });
 
