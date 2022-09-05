@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style_login.css">
     <title>Chat App</title>
 </head>
 
 <body>
-    <div id="content">
-        <div>
-            <p>Welcome to Chat App</p>
-            <form action="/room" method="POST">
-                <input type="text" placeholder="Enter your Name" id="username" name="username" required>
-                <input type="text" placeholder="Enter Room Name" id="roomname" name="roomname" required>
-                <input type="submit" value="Enter">
+    <div id="form-column">
+        <div id="form-row">
+            <form id="form" action="/room" method="POST">
+                <p id="welcome">Welcome to Chat App</p>
+                <input type="text" placeholder="Enter username.." id="username" class="input" name="username" required>
+                <input type="text" placeholder="Create/Join a room.." id="roomname" class="input" name="roomname" required>
+                <input type="submit" id="button" value="Enter">
             </form>
         </div>
     </div>
