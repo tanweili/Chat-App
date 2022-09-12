@@ -5,7 +5,11 @@ addUser = (id, username, roomname) => {
     users.push(user)
 }
 
-getUser = (id) => {
+getUserByName = (username) => {
+    return users.find(user => user.username === username)
+}
+
+getUserById = (id) => {
     return users.find(user => user.id === id)
 }
 
@@ -24,7 +28,8 @@ getRoomUsers = (roomname) => {
 module.exports = {
     users,
     addUser,
-    getUser,
+    getUserByName,
+    getUserById,
     deleteUser,
     getRoomUsers
 }
